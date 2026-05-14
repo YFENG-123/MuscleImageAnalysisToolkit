@@ -1,4 +1,4 @@
-import cv2
+﻿import cv2
 import numpy as np
 import os
 
@@ -209,6 +209,6 @@ if __name__ == "__main__":
     red_result, rp, green_result, gp, blue_result, bp, purple_result, pp = devide(
         image_path, save_folder
     )
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.waitKey(0)  # removed: no GUI support
+    # cv2.destroyAllWindows()  # removed: no GUI support
     use_cellpose(image_path, save_folder, img=purple_result, pixel_size=1)

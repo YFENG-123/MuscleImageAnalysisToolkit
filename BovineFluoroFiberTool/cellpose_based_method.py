@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import numpy as np
 import cv2
 import os
@@ -118,4 +118,4 @@ if __name__ == "__main__":
     # usr provide, if not or illegal, give a default value
     resfilepath1 = r"D:\Users\YFENG\Desktop"
     use_cellpose(imgpath1, resfilepath1)
-    cv2.waitKey(0)
+    # cv2.waitKey(0)  # removed: no GUI support

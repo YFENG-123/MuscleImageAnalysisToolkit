@@ -1,4 +1,4 @@
-import cv2
+﻿import cv2
 import numpy as np
 import os
 from cellpose_based_method import use_cellpose
@@ -53,8 +53,8 @@ def devide3(image_path):
     #计算肌束膜面积
     black_pixels = cv2.countNonZero(binary_image)
     cv2.imwrite(r"D:/Users/YFENG/Desktop/test.jpg",result_image)
-    cv2.imshow('result_image', result_image)
-    cv2.waitKey(0)
+    # cv2.imshow('result_image', result_image)  # removed: no GUI support
+    # cv2.waitKey(0)
 
     #计算等效半径
     resultar, cell_area, img_area = use_cellpose(result_image)
