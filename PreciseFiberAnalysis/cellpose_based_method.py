@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import numpy as np
 import cv2
 import os
@@ -25,8 +25,10 @@ def getResults(img0, masks, pixel_size, color=[1, 0, 0]):
         if si is not None:
             sr, sc = si
             mask = (masks[sr, sc] == (i + 1)).astype(np.uint8)
-            contour = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-            pvc, pvr = np.concatenate(contour[-2], axis=0).squeeze().T
+            contours, _ = cv2.findContours(
+                mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE
+            )
+            pvc, pvr = np.concatenate(contours, axis=0).squeeze().T
             vr, vc = pvr + sr.start, pvc + sc.start
             outlines[vr, vc] = 1
             mask_list = np.array(mask).flatten().tolist()
@@ -73,12 +75,8 @@ def use_cellpose(imgpath, resfilepath, pixel_size=10.0):
     mpl.rcParams["figure.dpi"] = 96
     # set model
     model = models.CellposeModel(gpu=False, model_type="cyto2")
-    # define CHANNELS to run segementation on
-    # grayscale=0, R=1, G=2, B=3
-    # channels = [cytoplasm, nucleus]
-    chan = [2, 0]
     # segment image
-    markers3, flows, styles, diams = model.eval(img, diameter=None, channels=chan)
+    markers3, flows, styles = model.eval(img, diameter=None, channel_axis=2)
     cell_boundary, resultar = getResults(img, markers3, pixel_size)
 
     path1 = resfilepath + "\\" + os.path.basename(imgpath).split(".")[0] + "_pose.jpg"
